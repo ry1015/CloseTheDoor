@@ -125,8 +125,16 @@
                 } else {
                     $(".pic").css("width", "100%");
                     $("iframe").css("width", $("#container").width() * .93);
-                    $("iframe").css("height", $("#container").height());
                     $("#poster").css("width", $("#container").width() * .33);
+                    
+                    if (browser.indexOf('Safari') > -1)
+                        $("iframe").css("height", $("#about_div").height() * 1.35);
+                    else if (browser.indexOf('Chrome') > -1)
+                        $("iframe").css("height", $("#about_div").height() * 1.40);
+                    else
+                        $("iframe").css("height", $("#container").height());
+                        
+                    
                     
                     $("#synop").css("padding-bottom", "5px");
                     
@@ -135,14 +143,8 @@
                         $("#about_div").css("width", "363px");
                         $("#about_div").css("padding-bottom", "80px");
                         
-                        /*
-                         * Mark, shorten the width of your browser then click reload
-                         * fix only the numbers which is multiplied to $("container").height()
-                         * such as 2, .80
-                         * I usually start with just $("#container").height then I go from there
-                         */
                         if (browser.indexOf('Safari') > -1)
-                            $("iframe").css("height", $("#container").height() * 2);
+                            $("iframe").css("height", $("#about_div").height() * .9);
                         else if (browser.indexOf('Firefox') > -1 || browser.indexOf('Chrome') > -1)
                             $("iframe").css("height", $("#container").height() * .80);
                         else
