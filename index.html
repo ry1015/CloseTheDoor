@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Close The Door</title>
+        <link rel="stylesheet" type="text/css" href="styles2.css">
+        <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <style>
+            body {
+                font-family: 'Ubuntu';
+            }
+            #test {
+                color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="test"></div>
+        <div id='title'></div>
+        <div id="player"><iframe id="if" src="http://www.youtube.com/embed/pK7Hof3LN3A?autoplay=1" frameborder="0"  
+         allowfullscreen></iframe></div>
+        <div id='container'>
+            <div class='photos_div'>
+                <ul class='images'>
+                    <li> <img class='pic' src="photos/CtD Still 1.jpg" /> </li>
+                    <li> <img class='pic' src="photos/CtD Still 2.jpg" /> </li>
+                    <li> <img class='pic' src="photos/CtD Still 3.jpg" /> </li>
+                    <li> <img class='pic' src="photos/CtD Still 4.jpg" /> </li>
+                    <li> <img class='pic' src="photos/CtD Still 5.jpg" /> </li>
+                    <li> <img class='pic' src="photos/CtD Still 6.jpg" /> </li>
+                    <li> <img class='pic' src="photos/CtD Still 7.jpg" /> </li>
+                    <li> <img class='pic' src="photos/CtD Still 8.jpg" /> </li>
+                    <li> <img class='pic' src="photos/CtD Still 9.jpg" /> </li>
+                </ul>
+            </div>
+            <div id="num">
+                <ul class="triggers">
+                   <li>.</li>
+                   <li>.</li>
+                   <li>.</li>
+                   <li>.</li>
+                   <li>.</li>
+                   <li>.</li>
+                   <li>.</li>
+                   <li>.</li>
+                   <li>.</li>
+                </ul>
+                <img class='nav prev' src='photos/prev.png'>
+                <img class='nav next' src='photos/next.png'>
+            </div>
+            
+        </div>
+        <div id="about_div">
+            <span><img id="poster" src="photos/poster.jpg"></span>
+            <span id="blank"></span>
+            <h3 id="synop">Synopsis</h3>
+            <p>
+                A young woman relives a nightmare each time she wakes up to the front door closing.<br>
+                Is she awake? Is that just her roommate in the hall?<br> 
+                Or is there something terrible waiting behind her door?<br>
+            </p>
+            <h3>Directed by:</h3> Glen Vivaris and Shaun Vivaris<br>
+
+            <h3>Written by:</h3> Ashley Perryman Quach<br>
+
+            <h3>Cast:</h3> Paula Deming, Jenny Yang, Spencer Weitzel<br><br>
+        </div>
+        <div id='menu'>
+            <div class='footer' id='trailer'></div>
+            <div class='footer' id='photos'></div>
+            <div class='footer' id='about'></div>
+            <div class='footer' id='fblogo'></div>
+            <div class='footer' id='copyright'><small>&copy; 2104 VIVARIUM FILM</small></div>
+        </div>
+        <script>
+            var timingRun = setInterval(function() { sliderTiming(); },6000);
+            
+            $(document).ready(function(){
+                var browser = get_browser();
+                if (browser.indexOf('IE') > -1 || browser.indexOf('Safari') > -1){
+                    $(".prev").hide();
+                    $(".next").hide();
+                }
+                timingRun = setInterval(function() { sliderTiming(); },600000);
+                $(".images").css("cursor", "auto");
+                $("#num").css("opacity", 0);
+                $(".photos_div").css("opacity", 0);
+                
+                var x = screen.availHeight;
+                if (x < 984) {
+                    $(".pic").css("width", "75%");
+                    $("iframe").css("width", $("#container").width() * .70);
+                    
+                    if (browser.indexOf('Safari') > -1)
+                        $("iframe").css("height", $("#about_div").height() * 1.15);
+                    else if (browser.indexOf('Chrome') > -1)
+                        $("iframe").css("height", $("#about_div").height() * 1.17);
+                    else if (browser.indexOf('Firefox') > -1)
+                        $("iframe").css("height", $("#about_div").height() * .85);
+                    else
+                        $("iframe").css("height", $("#about_div").height() * .88);
+                    
+                    $("#about_div").css("top", "-20px");
+                    
+                    if ($(window).width() < 1238){
+                        $("#poster").css("width", "363px");
+                        $("#about_div").css("width", "363px");
+                        $("#about_div").css("padding-bottom", "80px");
+                        
+                        if (browser.indexOf('Safari') > -1)
+                            $("iframe").css("height", $("#container").height() * 2);
+                        else if (browser.indexOf('Firefox') > -1 || browser.indexOf('Chrome') > -1)
+                            $("iframe").css("height", $("#container").height() * .80);
+                        else
+                            $("iframe").css("height", $("#container").height() * .80);
+                        
+                        $("#blank").text('<br>');
+                        $("#blank").css("opacity", "0");
+                    } else {
+                        $("#poster").css("width", "310px");
+                        $("#about_div").css("width", "700px");
+                        $("p").css("margin-top", "-35px");
+                        $("#blank").text('');
+                    }
+                } else {
+                    $(".pic").css("width", "100%");
+                    $("iframe").css("width", $("#container").width() * .93);
+                    $("iframe").css("height", $("#container").height());
+                    $("#poster").css("width", $("#container").width() * .33);
+                    
+                    $("#synop").css("padding-bottom", "5px");
+                    
+                    if ($(window).width() < 1238){
+                        $("#poster").css("width", "363px");
+                        $("#about_div").css("width", "363px");
+                        $("#about_div").css("padding-bottom", "80px");
+                        
+                        /*
+                         * Mark, shorten the width of your browser then click reload
+                         * fix only the numbers which is multiplied to $("container").height()
+                         * such as 2, .80
+                         * I usually start with just $("#container").height then I go from there
+                         */
+                        if (browser.indexOf('Safari') > -1)
+                            $("iframe").css("height", $("#container").height() * 2);
+                        else if (browser.indexOf('Firefox') > -1 || browser.indexOf('Chrome') > -1)
+                            $("iframe").css("height", $("#container").height() * .80);
+                        else
+                            $("iframe").css("height", $("#container").height() * .80);
+                        
+                        $("#blank").text('<br>');
+                        $("#blank").css("opacity", "0");
+                    } else {
+                        $("#poster").css("width", "363px");
+                        $("#about_div").css("width", "700px");
+                        $("#blank").text('');
+                    }
+                }
+                
+                $("#about_div").css("margin-top", $("#title").height() * 1.5);
+                $("ul.triggers li").css("cursor", "auto");
+                $(".nav").css("opacity", 0);
+                $(".nav").css("cursor", "auto");
+                $("#about_div").hide();
+                $(".photos_div").css("z-index", "1");
+                $("#player").css("z-index", "3");
+                $("#menu").css("z-index", "4");                
+            });
+            
+            $(window).resize(function(){
+                if (screen.availHeight < 984) {
+                    $("#container").css("height", "85%");
+                    $("iframe").css("width", $("#container").width() * .70);
+                    $("iframe").css("height", $(".photos_div").height());       
+                    $("#poster").css("width", "313px");
+                    $(".pic").css("width", "75%");
+                    
+                    if ($(window).width() < 1238){
+                        $("#poster").css("width", "300px");
+                        $("#about_div").css("width", "300px");
+                        $("#about_div").css("padding-bottom", "60px");
+                        $("#blank").text('<br>');
+                        $("#blank").css("opacity", "0");
+                    } else {
+                        $("#poster").css("width", "319px");
+                        $("#about_div").css("width", "700px");
+                        $("#about_div h1").css("margin-top", "-20px");
+                        $("#blank").text('');
+                    }
+                } else {
+                    $("#container").css("height", "90%");
+                    $("iframe").css("width", $("#container").width() * .93);
+                    $("iframe").css("height", $(".photos_div").height() * .93);
+                    $("#synop").css("padding-bottom", "5px");
+                    
+                    if ($(window).width() < 1238){
+                        $("#poster").css("width", "363px");
+                        $("#about_div").css("width", "363px");
+                        $("#about_div").css("padding-bottom", "80px");
+                        $("#blank").text('<br>');
+                        $("#blank").css("opacity", "0");
+                    } else {
+                        $("#poster").css("width", "363px");
+                        $("#about_div").css("width", "700px");
+                        $("#blank").text('');
+                    }
+                }
+                
+                //$("#test").text($("iframe").height());
+            });
+
+            $("#fblogo").click(function () {
+                window.open('https://www.facebook.com/pages/Close-the-Door/842937159071997');
+            });
+              
+            $(".pic").click(nextImage);
+            $(".next").click(nextImage);
+            $("#title").click(showTrailer);
+            $("#trailer").click(showTrailer);
+            
+            function showTrailer(){
+               if ($("#about_div").css("opacity") == 1 || $("#about_div").is(":visible")){
+                   $("#about_div").fadeOut("fast", function(){
+                       if ($("#player").is(":hidden")){
+                           $("#player").fadeIn("slow");
+                       }
+                   });
+               } 
+                
+               if ($(".photos_div").css("opacity") == 1){
+                   $(".photos_div").css("opacity", 0);
+               }
+               
+               if ($("#num").css("opacity") == 1){
+                   $("#num").css("opacity", 0);
+                   $("ul.triggers li").css("cursor", "auto");
+               }
+               
+               if ($(".nav").css("opacity") == 1){
+                   $(".nav").css("opacity", 0);
+                   $(".nav").css("cursor", "auto");
+               }
+               
+               if ($("#player").is(":hidden")){
+                   $("#player").fadeIn("slow");
+               }
+            }
+            
+            $("#photos").click(function(){
+               if ($("#player").css("opacity") == 1){
+                   $("#player").hide();
+                   $("#if").attr("src", "");
+                   $("#if").attr("src", "http://www.youtube.com/embed/pK7Hof3LN3A?autoplay=0");
+               }
+               
+               if ($(".photos_div").css("opacity") == 0){
+                   $(".photos_div").css("opacity", 1);
+               }
+               
+               if ($(".images").css("cursor") == "auto"){
+                   $(".images").css("cursor", "pointer");
+               }
+               
+               if ($("#num").css("opacity") == 0){
+                   $("#num").css("opacity", 1);
+                   $("ul.triggers li").css("cursor", "pointer");
+               }
+               
+               if ($("#about_div").is(":visible")){
+                   $("#about_div").fadeOut("fast",function(){
+                       doubleCheck();
+                   });
+               }
+               
+               if ($(".nav").css("opacity") == 0){
+                   $(".nav").css("opacity", 1);
+                   $(".nav").css("cursor", "pointer");
+               }
+            });
+            
+            function doubleCheck(){
+                if ($(".photos_div").css("opacity") == 0){
+                   $(".photos_div").css("opacity", 1);
+                }
+                if ($(".images").css("cursor") == "auto"){
+                    $(".images").css("cursor", "pointer");
+                }
+
+                if ($("#num").css("opacity") == 0){
+                    $("#num").css("opacity", 1);
+                    $("ul.triggers li").css("cursor", "pointer");
+                }
+
+                if ($(".nav").css("opacity") == 0){
+                    $(".nav").css("opacity", 1);
+                    $(".nav").css("cursor", "pointer");
+                }
+            }
+            
+            $("#about").click(function(){
+                if ($("#player").css("opacity") == 1){
+                   $("#player").hide();
+                   $("#if").attr("src", "");
+                   $("#if").attr("src", "http://www.youtube.com/embed/pK7Hof3LN3A?autoplay=0");
+                }
+               
+               if ($(".photos_div").css("opacity") == 1){
+                   $(".photos_div").css("opacity", 0);
+               }
+               
+               if ($("#num").css("opacity") == 1){
+                   $("#num").css("opacity", 0);
+                   $("ul.triggers li").css("cursor", "context-menu");
+               }
+               
+               if ($(".nav").css("opacity") == 1){
+                   $(".nav").css("opacity", 0);
+                   $(".nav").css("cursor", "context-menu");
+               }
+               
+               if ($(".images").css("cursor") == "pointer"){
+                   $(".images").css("cursor", "context-menu");
+               }
+               
+               if ($("#about_div").is(":hidden")){
+                   $("#about_div").fadeIn("slow", function(){
+                       if ($("#player").css("opacity") == 1){
+                           $("#player").hide();
+                           $("#if").attr("src", "");
+                           $("#if").attr("src", "http://www.youtube.com/embed/pK7Hof3LN3A?autoplay=0");
+                        }
+                       if ($(".photos_div").css("opacity") == 1){
+                            $(".photos_div").css("opacity", 0);
+                       }
+               
+                        if ($("#num").css("opacity") == 1){
+                            $("#num").css("opacity", 0);
+                            $("ul.triggers li").css("cursor", "context-menu");
+                        }
+
+                        if ($(".nav").css("opacity") == 1){
+                            $(".nav").css("opacity", 0);
+                            $(".nav").css("cursor", "context-menu");
+                        }
+
+                        if ($(".images").css("cursor") == "pointer"){
+                            $(".images").css("cursor", "context-menu");
+                        }
+                        
+                   });
+               }
+            });
+            
+            var triggers = $('ul.triggers li');
+            var images = $('ul.images li');
+            var lastElem = triggers.length-1;
+            var target;
+
+            triggers.first().addClass('active');
+            images.hide().first().show();
+
+            function sliderResponse(target) {
+                images.hide().eq(target).fadeIn(300);
+                triggers.removeClass('active').eq(target).addClass('active');
+            }
+
+            triggers.click(trigFunc);
+            
+            function trigFunc(){
+                if ($("#num").css("opacity") == 1){
+                    if ( !$(this).hasClass('active') ) {
+                        target = $(this).index();
+                        sliderResponse(target);
+                        resetTiming();
+                    }
+                }
+            }
+            
+            function nextImage(){
+                if ($(".nav").css("opacity") == 1){
+                    target = $('ul.triggers li.active').index();
+                    target === lastElem ? target = 0 : target = target+1;
+                    sliderResponse(target);
+                    resetTiming();
+                }
+            }
+            
+            $('.prev').click(function() {
+                if($(".nav").css("opacity") == 1){
+                    target = $('ul.triggers li.active').index();
+                    lastElem = triggers.length-1;
+                    target === 0 ? target = lastElem : target = target-1;
+                    sliderResponse(target);
+                    resetTiming();
+                }
+            });
+
+            
+            function sliderTiming() {
+                if ($(".photos_div").css("opacity") == 1){
+                    target = $('ul.triggers li.active').index();
+                    target === lastElem ? target = 0 : target = target+1;
+                    sliderResponse(target);
+                }
+            }
+            
+            
+            function resetTiming() {
+                clearInterval(timingRun);
+                timingRun = setInterval(function() { sliderTiming(); },6000);
+            }
+            
+            function get_browser(){
+                var ua=navigator.userAgent,tem,M=ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || []; 
+                if(/trident/i.test(M[1])){
+                    tem=/\brv[ :]+(\d+)/g.exec(ua) || []; 
+                    return 'IE '+(tem[1]||'');
+                    }   
+                if(M[1]==='Chrome'){
+                    tem=ua.match(/\bOPR\/(\d+)/)
+                    if(tem!=null)   {return 'Opera '+tem[1];}
+                    }   
+                M=M[2]? [M[1], M[2]]: [navigator.appName, navigator.appVersion, '-?'];
+                if((tem=ua.match(/version\/(\d+)/i))!=null) {M.splice(1,1,tem[1]);}
+                return M[0];
+            }
+        </script>
+    </body>
+</html>
+<!-- Author: Ryan Honrado
+     Email: ryan.joseph.honrado@gmail.com
+     Date: 10/30/2014
+-->
